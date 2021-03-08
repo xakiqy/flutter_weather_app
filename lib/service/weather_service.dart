@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/model/cities_weather.dart';
-import 'file:///C:/Users/NickDz/AndroidStudioProjects/weather_app/lib/service/geolocation_service.dart';
+import 'geolocation_service.dart';
 import 'package:weather_app/model/current_weather.dart';
 
 Future<CitiesWeather> fetchNearestCitiesWeather() async {
