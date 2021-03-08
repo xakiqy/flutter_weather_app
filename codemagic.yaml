@@ -6,8 +6,8 @@ workflows:
         name: iOS App
         environment:
             vars:
-                XCODE_WORKSPACE: "{{ Runner.xcworkspace }}"
-                XCODE_SCHEME: "{{ Runner.xcodeproj }}"
+                XCODE_WORKSPACE: {{ Runner.xcworkspace }}
+                XCODE_SCHEME: {{ Runner.xcodeproj }}
             xcode: latest
             cocoapods: default
         scripts:
