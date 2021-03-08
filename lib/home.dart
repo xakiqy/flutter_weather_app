@@ -125,11 +125,12 @@ class _HomePageState extends State<HomePage> {
                           'Daily temperature',
                           style: theme.textTheme.headline5,
                         ),
-                        TodayChartTemperature(
-                            hourly: snapshot.data!.hourly!.sublist(0, 24)),
                         SizedBox(
-                          height: 12,
+                          height: screenHeight(context, dividedBy: 3),
+                          child: TodayChartTemperature(
+                              hourly: snapshot.data!.hourly!.sublist(0, 24)),
                         ),
+
                         SizedBox(
                             height: screenHeight(context, dividedBy: 5),
                             child: bottomCardWeekWeather(snapshot.data!.daily)),
@@ -244,10 +245,13 @@ class _HomePageState extends State<HomePage> {
                   style: theme.textTheme.headline6),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Image(
-                    image: AssetImage(weatherImage(daily.weather![0].main!)),
+                child: SizedBox(
+                  height: screenHeight(context, dividedBy: 10),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image(
+                      image: AssetImage(weatherImage(daily.weather![0].main!)),
+                    ),
                   ),
                 ),
               ),
