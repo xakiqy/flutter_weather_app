@@ -7,6 +7,7 @@ import 'package:weather_app/screen_size_reducer.dart';
 import 'package:weather_app/service/weather_service.dart';
 import 'chart.dart';
 import 'service/extensions.dart';
+import 'util/util.dart';
 
 class HomePage extends StatefulWidget {
   final Cities cityWeather;
@@ -275,39 +276,4 @@ class _HomePageState extends State<HomePage> {
       );
     }).toList();
   }
-}
-
-String weatherBackGround(String currentWeather) {
-  var assetPath = 'assets/sunny_weather.png';
-  if (currentWeather.toLowerCase() == 'clear') {
-    assetPath = 'assets/sunny_weather.png';
-  } else if (currentWeather.toLowerCase() == 'rain' ||
-      currentWeather.toLowerCase() == 'snow' ||
-      currentWeather.toLowerCase() == 'thunderstorm') {
-    assetPath = 'assets/bad_weather.png';
-  } else if (currentWeather.toLowerCase() == 'atmosphere' ||
-      currentWeather.toLowerCase() == 'clouds' ||
-      currentWeather.toLowerCase() == 'drizzle') {
-    assetPath = 'assets/cloud_weather.png';
-  }
-  return assetPath;
-}
-
-String weatherImage(String currentWeather) {
-  var assetPath = 'assets/clouds.png';
-  if (currentWeather.toLowerCase() == 'clear') {
-    assetPath = 'assets/sunny.png';
-  } else if (currentWeather.toLowerCase() == 'rain') {
-    assetPath = 'assets/rain.png';
-  } else if (currentWeather.toLowerCase() == 'snow') {
-    assetPath = 'assets/snow.png';
-  } else if (currentWeather.toLowerCase() == 'thunderstorm') {
-    assetPath = 'assets/thunderstorm.png';
-  } else if (currentWeather.toLowerCase() == 'clouds' ||
-      currentWeather.toLowerCase() == 'atmosphere') {
-    assetPath = 'assets/clouds.png';
-  } else if (currentWeather.toLowerCase() == 'drizzle') {
-    assetPath = 'assets/drizzle.png';
-  }
-  return assetPath;
 }

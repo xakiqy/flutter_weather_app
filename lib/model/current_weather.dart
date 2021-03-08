@@ -1,13 +1,4 @@
-double checkDouble(dynamic value) {
-  if (value is double) {
-    return value;
-  } else if (value is String) {
-    return double.parse(value);
-  } else if (value is int) {
-    return value.toDouble();
-  }
-  return 0.0;
-}
+import 'package:weather_app/util/util.dart';
 
 class MinMaxModel {
   double min;

@@ -14,6 +14,7 @@ import 'home.dart';
 import 'model/cities_weather.dart';
 import 'model/city.dart';
 import 'model/search.dart';
+import 'util/util.dart';
 
 class SearchPage extends StatefulWidget {
   @override

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/screen_size_reducer.dart';
 import 'package:weather_app/service/weather_service.dart';
+import 'package:weather_app/util/util.dart';
 
 import 'chart.dart';
 import 'home.dart';
@@ -140,67 +141,6 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget header(BuildContext context, CurrentWeather currentWeather) {
-    return Container(
-      height: screenHeight(context, dividedBy: 3),
-      width: screenWidth(context),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 16.0, 4.0, 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      'Temperature: ' + currentWeather.main.temp.toString(),
-                      style: Theme.of(context).textTheme.headline6),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      'Feels like: ' + currentWeather.main.feelsLike.toString(),
-                      style: Theme.of(context).textTheme.headline6),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(currentWeather.weather[0].description.toString(),
-                      style: Theme.of(context).textTheme.headline6),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(currentWeather.name,
-                      style: Theme.of(context).textTheme.headline6),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(16.0, 0.0, 32.0, 32.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(weatherImage(currentWeather.weather[0].main),
-                      width: screenWidth(
-                        context,
-                        dividedBy: 4,
-                      ),
-                      height: screenHeight(
-                        context,
-                        dividedBy: 4,
-                      ))
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
