@@ -7,7 +7,7 @@ import 'package:weather_app/model/current_weather.dart';
 class TodayChartTemperature extends StatefulWidget {
   final List<Hourly> hourly;
 
-  TodayChartTemperature({Key key, @required this.hourly}) : super(key: key);
+  TodayChartTemperature({Key? key, required this.hourly}) : super(key: key);
 
   @override
   _TodayChartTemperatureState createState() => _TodayChartTemperatureState();
@@ -75,7 +75,7 @@ class _TodayChartTemperatureState extends State<TodayChartTemperature> {
           getTitles: (value) {
             if (value.toInt().isOdd) {
               return DateTime.fromMillisecondsSinceEpoch(
-                      widget.hourly[value.toInt()].dt.toInt() * 1000)
+                      widget.hourly[value.toInt()].dt!.toInt() * 1000)
                   .hour
                   .toString();
             }
@@ -105,7 +105,7 @@ class _TodayChartTemperatureState extends State<TodayChartTemperature> {
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
       maxX: 23,
-      minY: yAxis.min - 3,
+      minY: yAxis.min! - 3,
       maxY: yAxis.max,
       lineBarsData: [
         LineChartBarData(
@@ -130,14 +130,14 @@ class _TodayChartTemperatureState extends State<TodayChartTemperature> {
   List<FlSpot> getSpots(List<Hourly> hourly) {
     var listSpots = <FlSpot>[];
     for (int i = 0; i < hourly.length; i++) {
-      listSpots.add(FlSpot(i.toDouble(), hourly[i].temp));
+      listSpots.add(FlSpot(i.toDouble(), hourly[i].temp!));
     }
     return listSpots;
   }
 
   MinMaxModel generalChartData(List<Hourly> hourly) {
     var listHourly = List.of(hourly);
-    listHourly.sort((a, b) => a.temp.compareTo(b.temp));
+    listHourly.sort((a, b) => a.temp!.compareTo(b.temp!));
     return MinMaxModel(min: listHourly.first.temp, max: listHourly.last.temp);
   }
 }

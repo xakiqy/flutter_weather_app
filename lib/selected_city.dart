@@ -13,14 +13,14 @@ import 'model/city.dart';
 class SelectedCityPage extends StatefulWidget {
   final City city;
 
-  SelectedCityPage({Key key, @required this.city});
+  SelectedCityPage({Key? key, required this.city});
 
   @override
   _SelectedCityPageState createState() => _SelectedCityPageState();
 }
 
 class _SelectedCityPageState extends State<SelectedCityPage> {
-  Future weeklyAndHourlyWeather;
+  Future? weeklyAndHourlyWeather;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
         body: GestureDetector(
       child: selectedCityPageTab(),
       onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity > 0) Navigator.pop(context);
+        if (details.primaryVelocity! > 0) Navigator.pop(context);
       },
     ));
   }
@@ -43,32 +43,32 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
   Widget selectedCityPageTab() {
     final ThemeData theme = Theme.of(context);
     return FutureBuilder<WeekAndHourlyWeather>(
-        future: weeklyAndHourlyWeather,
+        future: weeklyAndHourlyWeather as Future<WeekAndHourlyWeather>?,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            snapshot.data.hourly.sort((a, b) => a.dt.compareTo(b.dt));
+            snapshot.data!.hourly!.sort((a, b) => a.dt!.compareTo(b.dt!));
             return Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(weatherBackGround(
-                          snapshot.data.current.weather[0].main)),
+                          snapshot.data!.current!.weather![0].main!)),
                       fit: BoxFit.fill)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  topHeader(snapshot.data, theme),
+                  topHeader(snapshot.data!, theme),
                   Text(
                     'Daily temperature',
                     style: theme.textTheme.headline5,
                   ),
                   TodayChartTemperature(
-                      hourly: snapshot.data.hourly.sublist(0, 24)),
+                      hourly: snapshot.data!.hourly!.sublist(0, 24)),
                   SizedBox(
                     height: 12,
                   ),
                   SizedBox(
                       height: screenHeight(context, dividedBy: 5),
-                      child: bottomCardWeekWeather(snapshot.data.daily)),
+                      child: bottomCardWeekWeather(snapshot.data!.daily)),
                 ],
               ),
             );
@@ -104,17 +104,17 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
                   ),
                 ),
                 Text(
-                  weekAndHourlyWeather.current.temp == null
+                  weekAndHourlyWeather.current!.temp == null
                       ? ''
                       : 'temperature ' +
-                          weekAndHourlyWeather.current.temp.ceil().toString(),
+                          weekAndHourlyWeather.current!.temp!.ceil().toString(),
                   style: theme.textTheme.headline4,
                 ),
                 Text(
-                  weekAndHourlyWeather.current.feelsLike == null
+                  weekAndHourlyWeather.current!.feelsLike == null
                       ? ''
                       : 'feels like ' +
-                          weekAndHourlyWeather.current.feelsLike
+                          weekAndHourlyWeather.current!.feelsLike!
                               .ceil()
                               .toString(),
                   style: theme.textTheme.headline4,
@@ -122,9 +122,9 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    weekAndHourlyWeather.current.weather[0].description == null
+                    weekAndHourlyWeather.current!.weather![0].description == null
                         ? ''
-                        : weekAndHourlyWeather.current.weather[0].description,
+                        : weekAndHourlyWeather.current!.weather![0].description!,
                     style: theme.textTheme.headline5,
                   ),
                 ),
@@ -135,7 +135,7 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Image(
               image: AssetImage(
-                  weatherImage(weekAndHourlyWeather.current.weather[0].main)),
+                  weatherImage(weekAndHourlyWeather.current!.weather![0].main!)),
               height: screenHeight(context, dividedBy: 10),
               width: screenWidth(context, dividedBy: 4),
             ),
@@ -145,7 +145,7 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
     );
   }
 
-  Widget bottomCardWeekWeather(List<Daily> dailies) {
+  Widget bottomCardWeekWeather(List<Daily>? dailies) {
     return Container(
       height: screenHeight(context, dividedBy: 3.5),
       child: ListView(
@@ -155,7 +155,7 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
     );
   }
 
-  List<SizedBox> _buildWeatherList(BuildContext context, List<Daily> dailies) {
+  List<SizedBox> _buildWeatherList(BuildContext context, List<Daily>? dailies) {
     if (dailies == null || dailies.isEmpty) {
       return const <SizedBox>[];
     }
@@ -175,14 +175,14 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
             children: <Widget>[
               Text(
                   DateFormat('EEEE').format(DateTime.fromMillisecondsSinceEpoch(
-                      daily.dt.toInt() * 1000)),
+                      daily.dt!.toInt() * 1000)),
                   style: theme.textTheme.headline6),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Image(
-                    image: AssetImage(weatherImage(daily.weather[0].main)),
+                    image: AssetImage(weatherImage(daily.weather![0].main!)),
                   ),
                 ),
               ),
@@ -193,13 +193,13 @@ class _SelectedCityPageState extends State<SelectedCityPage> {
                     Text(
                       daily == null
                           ? 'max '
-                          : 'max' + daily.temp.max.toString(),
-                      style: theme.textTheme.bodyText2
+                          : 'max' + daily.temp!.max.toString(),
+                      style: theme.textTheme.bodyText2!
                           .copyWith(color: Colors.black),
                     ),
                     Text(
-                      daily == null ? '' : 'min ' + daily.temp.min.toString(),
-                      style: theme.textTheme.bodyText2
+                      daily == null ? '' : 'min ' + daily.temp!.min.toString(),
+                      style: theme.textTheme.bodyText2!
                           .copyWith(color: Colors.black),
                     ),
                   ],

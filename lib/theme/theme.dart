@@ -60,20 +60,20 @@ ThemeData _buildWeatherTheme() {
 TextTheme _buildWeatherTextTheme(TextTheme base) {
   return base
       .copyWith(
-        headline6: base.headline6.copyWith(fontSize: 18.0),
-        caption: base.caption.copyWith(
+        headline6: base.headline6!.copyWith(fontSize: 18.0),
+        caption: base.caption!.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 14.0,
         ),
-        bodyText1: base.bodyText1.copyWith(
+        bodyText1: base.bodyText1!.copyWith(
           fontWeight: FontWeight.w500,
           fontSize: 16.0,
         ),
-        headline5: base.headline5.copyWith(
+        headline5: base.headline5!.copyWith(
           fontSize: 24.0,
           fontWeight: FontWeight.w500,
         ),
-        headline4: base.headline4.copyWith(
+        headline4: base.headline4!.copyWith(
           fontSize: 20.0,
           fontWeight: FontWeight.w500,
         ),

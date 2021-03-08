@@ -12,19 +12,19 @@ import 'util/util.dart';
 class HomePage extends StatefulWidget {
   final Cities cityWeather;
 
-  HomePage({Key key, @required this.cityWeather});
+  HomePage({Key? key, required this.cityWeather});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  Future weeklyAndHourlyWeather;
+  Future? weeklyAndHourlyWeather;
 
   @override
   void initState() {
     super.initState();
-    weeklyAndHourlyWeather = fetchWeeklyDailyWeather(widget.cityWeather.coord);
+    weeklyAndHourlyWeather = fetchWeeklyDailyWeather(widget.cityWeather.coord!);
   }
 
   @override
@@ -39,12 +39,12 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
-                    weatherBackGround(widget.cityWeather.weather[0].main)),
+                    weatherBackGround(widget.cityWeather.weather![0].main!)),
                 fit: BoxFit.fill)),
         child: Column(
           children: [
             Hero(
-              tag: widget.cityWeather.name,
+              tag: widget.cityWeather.name!,
               child: Container(
                 height: screenHeight(context, dividedBy: 3),
                 child: Row(
@@ -71,19 +71,19 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            widget.cityWeather.main.temp == null
+                            widget.cityWeather.main!.temp == null
                                 ? ''
                                 : 'temperature ' +
-                                    widget.cityWeather.main.temp
+                                    widget.cityWeather.main!.temp!
                                         .ceil()
                                         .toString(),
                             style: theme.textTheme.headline4,
                           ),
                           Text(
-                            widget.cityWeather.main.feelsLike == null
+                            widget.cityWeather.main!.feelsLike == null
                                 ? ''
                                 : 'feels like ' +
-                                    widget.cityWeather.main.feelsLike
+                                    widget.cityWeather.main!.feelsLike!
                                         .ceil()
                                         .toString(),
                             style: theme.textTheme.headline4,
@@ -91,9 +91,9 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              widget.cityWeather.weather[0].description == null
+                              widget.cityWeather.weather![0].description == null
                                   ? ''
-                                  : widget.cityWeather.weather[0].description,
+                                  : widget.cityWeather.weather![0].description!,
                               style: theme.textTheme.headline5,
                             ),
                           ),
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Image(
                         image: AssetImage(
-                            weatherImage(widget.cityWeather.weather[0].main)),
+                            weatherImage(widget.cityWeather.weather![0].main!)),
                         height: screenHeight(context, dividedBy: 10),
                         width: screenWidth(context, dividedBy: 4),
                       ),
@@ -114,10 +114,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             FutureBuilder<WeekAndHourlyWeather>(
-                future: weeklyAndHourlyWeather,
+                future: weeklyAndHourlyWeather as Future<WeekAndHourlyWeather>?,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    snapshot.data.hourly.sort((a, b) => a.dt.compareTo(b.dt));
+                    snapshot.data!.hourly!.sort((a, b) => a.dt!.compareTo(b.dt!));
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -126,13 +126,13 @@ class _HomePageState extends State<HomePage> {
                           style: theme.textTheme.headline5,
                         ),
                         TodayChartTemperature(
-                            hourly: snapshot.data.hourly.sublist(0, 24)),
+                            hourly: snapshot.data!.hourly!.sublist(0, 24)),
                         SizedBox(
                           height: 12,
                         ),
                         SizedBox(
                             height: screenHeight(context, dividedBy: 5),
-                            child: bottomCardWeekWeather(snapshot.data.daily)),
+                            child: bottomCardWeekWeather(snapshot.data!.daily)),
                       ],
                     );
                   } else if (snapshot.hasError)
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity > 0) Navigator.pop(context);
+        if (details.primaryVelocity! > 0) Navigator.pop(context);
       },
     );
   }
@@ -164,24 +164,24 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      'Temperature: ' + currentWeather.main.temp.toString(),
+                      'Temperature: ' + currentWeather.main!.temp.toString(),
                       style: Theme.of(context).textTheme.headline6),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      'Feels like: ' + currentWeather.main.feelsLike.toString(),
+                      'Feels like: ' + currentWeather.main!.feelsLike.toString(),
                       style: Theme.of(context).textTheme.headline6),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      currentWeather.weather[0].description.capitalize(),
+                      currentWeather.weather![0].description!.capitalize(),
                       style: Theme.of(context).textTheme.headline6),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(currentWeather.name,
+                  child: Text(currentWeather.name!,
                       style: Theme.of(context).textTheme.headline6),
                 ),
               ],
@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(weatherImage(currentWeather.weather[0].main),
+                  Image.asset(weatherImage(currentWeather.weather![0].main!),
                       width: screenWidth(
                         context,
                         dividedBy: 4,
@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget bottomCardWeekWeather(List<Daily> dailies) {
+  Widget bottomCardWeekWeather(List<Daily>? dailies) {
     return Container(
       height: screenHeight(context, dividedBy: 3.5),
       child: ListView(
@@ -220,7 +220,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<SizedBox> _buildWeatherList(BuildContext context, List<Daily> dailies) {
+  List<SizedBox> _buildWeatherList(BuildContext context, List<Daily>? dailies) {
     if (dailies == null || dailies.isEmpty) {
       return const <SizedBox>[];
     }
@@ -240,14 +240,14 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Text(
                   DateFormat('EEEE').format(DateTime.fromMillisecondsSinceEpoch(
-                      daily.dt.toInt() * 1000)),
+                      daily.dt!.toInt() * 1000)),
                   style: theme.textTheme.headline6),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Image(
-                    image: AssetImage(weatherImage(daily.weather[0].main)),
+                    image: AssetImage(weatherImage(daily.weather![0].main!)),
                   ),
                 ),
               ),
@@ -258,13 +258,13 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       daily == null
                           ? 'max '
-                          : 'max' + daily.temp.max.toString(),
-                      style: theme.textTheme.bodyText2
+                          : 'max' + daily.temp!.max.toString(),
+                      style: theme.textTheme.bodyText2!
                           .copyWith(color: Colors.black),
                     ),
                     Text(
-                      daily == null ? '' : 'min ' + daily.temp.min.toString(),
-                      style: theme.textTheme.bodyText2
+                      daily == null ? '' : 'min ' + daily.temp!.min.toString(),
+                      style: theme.textTheme.bodyText2!
                           .copyWith(color: Colors.black),
                     ),
                   ],

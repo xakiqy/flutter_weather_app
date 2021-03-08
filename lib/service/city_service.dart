@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -26,7 +27,7 @@ Future<List<City>> getCitiesByLetters(String letters) async {
 }
 
 Future<Database> getDb() async {
-  var databasesPath = await getDatabasesPath();
+  var databasesPath = await (getDatabasesPath() as FutureOr<String>);
   var path = join(databasesPath, "cities.db");
 
 // Check if the database exists

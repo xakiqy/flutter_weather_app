@@ -1,7 +1,7 @@
 import 'current_weather.dart';
 
 class CitiesWeather {
-  List<Cities> cities;
+  List<Cities>? cities;
 
   CitiesWeather({this.cities});
 
@@ -9,7 +9,7 @@ class CitiesWeather {
     if (json['list'] != null) {
       cities = [];
       json['list'].forEach((v) {
-        cities.add(new Cities.fromJson(v));
+        cities!.add(new Cities.fromJson(v));
       });
     }
   }
@@ -17,17 +17,17 @@ class CitiesWeather {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.cities != null) {
-      data['list'] = this.cities.map((v) => v.toJson()).toList();
+      data['list'] = this.cities!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Cities {
-  String name;
-  Coordinates coord;
-  Main main;
-  List<Weather> weather;
+  String? name;
+  Coordinates? coord;
+  Main? main;
+  List<Weather>? weather;
 
   Cities({this.name, this.coord, this.main, this.weather});
 
@@ -39,7 +39,7 @@ class Cities {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(new Weather.fromJson(v));
+        weather!.add(new Weather.fromJson(v));
       });
     }
   }
@@ -48,13 +48,13 @@ class Cities {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     if (this.coord != null) {
-      data['coord'] = this.coord.toJson();
+      data['coord'] = this.coord!.toJson();
     }
     if (this.main != null) {
-      data['main'] = this.main.toJson();
+      data['main'] = this.main!.toJson();
     }
     if (this.weather != null) {
-      data['weather'] = this.weather.map((v) => v.toJson()).toList();
+      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
     }
     return data;
   }

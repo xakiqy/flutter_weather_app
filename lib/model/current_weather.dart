@@ -1,20 +1,20 @@
 import 'package:weather_app/util/util.dart';
 
 class MinMaxModel {
-  double min;
-  double max;
+  double? min;
+  double? max;
 
   MinMaxModel({this.min, this.max});
 }
 
 class WeekAndHourlyWeather {
-  double lat;
-  double lon;
-  String timezone;
-  double timezoneOffset;
-  Current current;
-  List<Hourly> hourly;
-  List<Daily> daily;
+  double? lat;
+  double? lon;
+  String? timezone;
+  double? timezoneOffset;
+  Current? current;
+  List<Hourly>? hourly;
+  List<Daily>? daily;
 
   WeekAndHourlyWeather(
       {this.lat,
@@ -35,13 +35,13 @@ class WeekAndHourlyWeather {
     if (json['hourly'] != null) {
       hourly = [];
       json['hourly'].forEach((v) {
-        hourly.add(new Hourly.fromJson(v));
+        hourly!.add(new Hourly.fromJson(v));
       });
     }
     if (json['daily'] != null) {
-      daily = new List<Daily>();
+      daily = [];
       json['daily'].forEach((v) {
-        daily.add(new Daily.fromJson(v));
+        daily!.add(new Daily.fromJson(v));
       });
     }
   }
@@ -53,24 +53,24 @@ class WeekAndHourlyWeather {
     data['timezone'] = this.timezone;
     data['timezone_offset'] = this.timezoneOffset;
     if (this.current != null) {
-      data['current'] = this.current.toJson();
+      data['current'] = this.current!.toJson();
     }
     if (this.hourly != null) {
-      data['hourly'] = this.hourly.map((v) => v.toJson()).toList();
+      data['hourly'] = this.hourly!.map((v) => v.toJson()).toList();
     }
     if (this.daily != null) {
-      data['daily'] = this.daily.map((v) => v.toJson()).toList();
+      data['daily'] = this.daily!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Current {
-  double dt;
-  double temp;
-  double feelsLike;
-  double windSpeed;
-  List<Weather> weather;
+  double? dt;
+  double? temp;
+  double? feelsLike;
+  double? windSpeed;
+  List<Weather>? weather;
 
   Current({
     this.dt,
@@ -88,7 +88,7 @@ class Current {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(new Weather.fromJson(v));
+        weather!.add(new Weather.fromJson(v));
       });
     }
   }
@@ -100,15 +100,15 @@ class Current {
     data['feels_like'] = this.feelsLike;
     data['wind_speed'] = this.windSpeed;
     if (this.weather != null) {
-      data['weather'] = this.weather.map((v) => v.toJson()).toList();
+      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Weather {
-  String main;
-  String description;
+  String? main;
+  String? description;
 
   Weather({this.main, this.description});
 
@@ -126,11 +126,11 @@ class Weather {
 }
 
 class Hourly {
-  double dt;
-  double temp;
-  double feelsLike;
-  double windSpeed;
-  List<Weather> weather;
+  double? dt;
+  double? temp;
+  double? feelsLike;
+  double? windSpeed;
+  List<Weather>? weather;
 
   Hourly({
     this.dt,
@@ -148,7 +148,7 @@ class Hourly {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(new Weather.fromJson(v));
+        weather!.add(new Weather.fromJson(v));
       });
     }
   }
@@ -160,17 +160,17 @@ class Hourly {
     data['feels_like'] = this.feelsLike;
     data['wind_speed'] = this.windSpeed;
     if (this.weather != null) {
-      data['weather'] = this.weather.map((v) => v.toJson()).toList();
+      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Daily {
-  double dt;
-  Temp temp;
-  double windSpeed;
-  List<Weather> weather;
+  double? dt;
+  Temp? temp;
+  double? windSpeed;
+  List<Weather>? weather;
 
   Daily({
     this.dt,
@@ -186,7 +186,7 @@ class Daily {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(new Weather.fromJson(v));
+        weather!.add(new Weather.fromJson(v));
       });
     }
   }
@@ -195,20 +195,20 @@ class Daily {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['dt'] = this.dt;
     if (this.temp != null) {
-      data['temp'] = this.temp.toJson();
+      data['temp'] = this.temp!.toJson();
     }
     data['wind_speed'] = this.windSpeed;
     if (this.weather != null) {
-      data['weather'] = this.weather.map((v) => v.toJson()).toList();
+      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Temp {
-  double day;
-  double min;
-  double max;
+  double? day;
+  double? min;
+  double? max;
 
   Temp({this.day, this.min, this.max});
 
@@ -228,14 +228,14 @@ class Temp {
 }
 
 class CurrentWeather {
-  Coordinates coord;
-  List<Weather> weather;
-  String base;
-  Main main;
-  double visibility;
-  Wind wind;
-  Clouds clouds;
-  String name;
+  Coordinates? coord;
+  List<Weather>? weather;
+  String? base;
+  Main? main;
+  double? visibility;
+  Wind? wind;
+  Clouds? clouds;
+  String? name;
 
   CurrentWeather({
     this.coord,
@@ -254,7 +254,7 @@ class CurrentWeather {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(new Weather.fromJson(v));
+        weather!.add(new Weather.fromJson(v));
       });
     }
     base = json['base'];
@@ -269,21 +269,21 @@ class CurrentWeather {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.coord != null) {
-      data['coord'] = this.coord.toJson();
+      data['coord'] = this.coord!.toJson();
     }
     if (this.weather != null) {
-      data['weather'] = this.weather.map((v) => v.toJson()).toList();
+      data['weather'] = this.weather!.map((v) => v.toJson()).toList();
     }
     data['base'] = this.base;
     if (this.main != null) {
-      data['main'] = this.main.toJson();
+      data['main'] = this.main!.toJson();
     }
     data['visibility'] = this.visibility;
     if (this.wind != null) {
-      data['wind'] = this.wind.toJson();
+      data['wind'] = this.wind!.toJson();
     }
     if (this.clouds != null) {
-      data['clouds'] = this.clouds.toJson();
+      data['clouds'] = this.clouds!.toJson();
     }
     data['name'] = this.name;
     return data;
@@ -291,8 +291,8 @@ class CurrentWeather {
 }
 
 class Coordinates {
-  double lon;
-  double lat;
+  double? lon;
+  double? lat;
 
   Coordinates({this.lon, this.lat});
 
@@ -310,10 +310,10 @@ class Coordinates {
 }
 
 class Main {
-  double temp;
-  double feelsLike;
-  double pressure;
-  double humidity;
+  double? temp;
+  double? feelsLike;
+  double? pressure;
+  double? humidity;
 
   Main({this.temp, this.feelsLike, this.pressure, this.humidity});
 
@@ -335,8 +335,8 @@ class Main {
 }
 
 class Wind {
-  double speed;
-  double deg;
+  double? speed;
+  double? deg;
 
   Wind({this.speed, this.deg});
 
@@ -354,7 +354,7 @@ class Wind {
 }
 
 class Clouds {
-  double all;
+  double? all;
 
   Clouds({this.all});
 

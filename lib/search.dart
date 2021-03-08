@@ -22,7 +22,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Future citiesWeather;
+  Future? citiesWeather;
   final searchController = FloatingSearchBarController();
   String searchQuery = "Search query";
 
@@ -37,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(resizeToAvoidBottomInset: false, body: buildSearchBar());
   }
 
-  Widget bottomCardWeekWeather(List<Cities> cities) {
+  Widget bottomCardWeekWeather(List<Cities>? cities) {
     return ListView(
       scrollDirection: Axis.vertical,
       children: _buildWeatherList(context, cities),
@@ -45,7 +45,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   List<GestureDetector> _buildWeatherList(
-      BuildContext context, List<Cities> cities) {
+      BuildContext context, List<Cities>? cities) {
     if (cities == null || cities.isEmpty) {
       return const <GestureDetector>[];
     }
@@ -67,12 +67,12 @@ class _SearchPageState extends State<SearchPage> {
               clipBehavior: Clip.antiAlias,
               elevation: 3,
               child: Hero(
-                tag: cityWeather.name,
+                tag: cityWeather.name!,
                 child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                              weatherBackGround(cityWeather.weather[0].main)),
+                              weatherBackGround(cityWeather.weather![0].main!)),
                           fit: BoxFit.fill)),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,25 +94,25 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                             ),
                             Text(
-                              cityWeather.main.temp == null
+                              cityWeather.main!.temp == null
                                   ? ''
                                   : 'temperature ' +
-                                      cityWeather.main.temp.ceil().toString(),
+                                      cityWeather.main!.temp!.ceil().toString(),
                               style: theme.textTheme.bodyText1,
                             ),
                             Text(
-                              cityWeather.main.feelsLike == null
+                              cityWeather.main!.feelsLike == null
                                   ? ''
                                   : 'feels like ' +
-                                      cityWeather.main.feelsLike
+                                      cityWeather.main!.feelsLike!
                                           .ceil()
                                           .toString(),
                               style: theme.textTheme.bodyText1,
                             ),
                             Text(
-                              cityWeather.weather[0].description == null
+                              cityWeather.weather![0].description == null
                                   ? ''
-                                  : cityWeather.weather[0].description,
+                                  : cityWeather.weather![0].description!,
                               style: theme.textTheme.bodyText1,
                             ),
                           ],
@@ -122,7 +122,7 @@ class _SearchPageState extends State<SearchPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
                           image: AssetImage(
-                              weatherImage(cityWeather.weather[0].main)),
+                              weatherImage(cityWeather.weather![0].main!)),
                           height: screenHeight(context, dividedBy: 10),
                           width: screenWidth(context, dividedBy: 4),
                         ),
@@ -160,7 +160,7 @@ class _SearchPageState extends State<SearchPage> {
 
     return Consumer<SearchModel>(
       builder: (context, model, _) => FloatingSearchBar(
-        queryStyle: ThemeData.light().textTheme.headline5,
+        queryStyle: ThemeData.light().textTheme.headline5!,
         automaticallyImplyBackButton: false,
         controller: searchController,
         clearQueryOnClose: true,
@@ -194,10 +194,10 @@ class _SearchPageState extends State<SearchPage> {
       height: screenHeight(context,
           reducedBy: screenHeight(context, dividedBy: 10)),
       child: FutureBuilder<CitiesWeather>(
-          future: citiesWeather,
+          future: citiesWeather as Future<CitiesWeather>?,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return bottomCardWeekWeather(snapshot.data.cities);
+              return bottomCardWeekWeather(snapshot.data!.cities);
             } else if (snapshot.hasError) return Text('${snapshot.error}');
             return Center(child: CircularProgressIndicator());
           }),
@@ -271,14 +271,14 @@ class _SearchPageState extends State<SearchPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        city.name,
-                        style: textTheme.headline6
+                        city.name!,
+                        style: textTheme.headline6!
                             .copyWith(color: Colors.grey.shade600),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        city.country,
-                        style: textTheme.bodyText2
+                        city.country!,
+                        style: textTheme.bodyText2!
                             .copyWith(color: Colors.grey.shade600),
                       ),
                     ],
