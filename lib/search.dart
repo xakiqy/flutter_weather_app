@@ -135,9 +135,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return HomePage(cityWeather: cityWeather);
-          }));
+          Navigator.push(context, _createSearchedCityRoute(cityWeather));
         });
   }
 
@@ -242,9 +240,7 @@ class _SearchPageState extends State<SearchPage> {
       children: [
         InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return SelectedCityPage(city: city);
-            }));
+            Navigator.push(context, _createSelectedCityRoute(city));
             FloatingSearchBar.of(context).close();
             Future.delayed(
               const Duration(milliseconds: 2000),
@@ -291,6 +287,42 @@ class _SearchPageState extends State<SearchPage> {
         if (model.suggestions.isNotEmpty && city != model.suggestions.last)
           const Divider(height: 0),
       ],
+    );
+  }
+  
+  Route _createSelectedCityRoute(City city) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => SelectedCityPage(city : city),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Route _createSearchedCityRoute(Cities cities) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => HomePage(cityWeather : cities),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

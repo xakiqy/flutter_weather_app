@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/model/cities_weather.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/screen_size_reducer.dart';
+import 'package:weather_app/selected_city.dart';
 import 'package:weather_app/service/weather_service.dart';
 import 'chart.dart';
 import 'service/extensions.dart';
@@ -260,14 +261,12 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      daily == null
-                          ? 'max '
-                          : 'max' + daily.temp!.max.toString(),
+                      'max' + daily.temp!.max.toString(),
                       style: theme.textTheme.bodyText2!
                           .copyWith(color: Colors.black),
                     ),
                     Text(
-                      daily == null ? '' : 'min ' + daily.temp!.min.toString(),
+                      'min ' + daily.temp!.min.toString(),
                       style: theme.textTheme.bodyText2!
                           .copyWith(color: Colors.black),
                     ),
