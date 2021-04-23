@@ -49,7 +49,6 @@
 
        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
        <string>This app needs access to location when open and in the background.</string>
-</dict>
 
 <key>NSAppTransportSecurity</key>
 <dict>
@@ -63,5 +62,6 @@
             <true/>
         </dict>
     </dict>
+</dict>
 </dict>
 </plist>
